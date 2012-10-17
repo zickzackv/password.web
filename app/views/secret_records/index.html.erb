@@ -1,0 +1,27 @@
+<h1>Listing secret_records</h1>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Password</th>
+    <th>Url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @secret_records.each do |secret_record| %>
+  <tr>
+    <td><%= secret_record.username %></td>
+    <td><%= link_to '<em class="icon-eye-open"></em> Show'.html_safe, '#', data: { encrypted: secret_record.password } %></td>
+    <td><%= secret_record.url %></td>
+    <td><%= link_to 'Show', secret_record %></td>
+    <td><%= link_to 'Edit', edit_secret_record_path(secret_record) %></td>
+    <td><%= link_to 'Destroy', secret_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Secret record', new_secret_record_path %>

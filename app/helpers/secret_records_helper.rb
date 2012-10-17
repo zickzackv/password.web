@@ -1,0 +1,2 @@
+module SecretRecordsHelper
+end

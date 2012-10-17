@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @secret_record.username %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @secret_record.password %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @secret_record.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_secret_record_path(@secret_record) %> |
+<%= link_to 'Back', secret_records_path %>
