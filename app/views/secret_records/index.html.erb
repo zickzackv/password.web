@@ -6,16 +6,14 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Username</th>
-      <th>Url</th>
+      <th>Title</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
   <% @secret_records.each do |secret_record| %>
     <tr>
-      <td><%= secret_record.username %></td>
-      <td><%= secret_record.url %></td>
+      <td><%= secret_record.title %></td>
       <td>
         <div class="btn-group pull-right">
           <%= link_to '<em class="icon-eye-open"></em> Show'.html_safe, '#', data: { encrypted: secret_record.password }, class: 'btn btn-small' %>

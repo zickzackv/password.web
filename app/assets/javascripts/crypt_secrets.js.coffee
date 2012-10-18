@@ -8,7 +8,7 @@ $(->
     if type==undefined
       type = elem.attr('type')
     elem.hide()
-    newElem = $('<input>').attr('type', type).change(->
+    newElem = $('<input />').attr('value', '').attr('type', type).change(->
       self.userSecret($(this), (field, secret)->
         value = field.val()
         field.data('encryptedField').val(CryptoJS.AES.encrypt(value, secret), format: JsonFormatter)
