@@ -9,39 +9,44 @@ $(->
       type = elem.attr('type')
     elem.hide()
     newElem = $('<input>').attr('type', type).change(->
-      value = $(this).val()
-      secret = self.getUserSecret()
-      $(this).data('encryptedField').val(CryptoJS.AES.encrypt(value, secret), format: JsonFormatter)
+      self.userSecret($(this), (field, secret)->
+        value = field.val()
+        field.data('encryptedField').val(CryptoJS.AES.encrypt(value, secret), format: JsonFormatter)
+      )
     ).data('encryptedField', elem).insertAfter(elem)
   )
 
   $('[data-encrypted]').click(->
-    encrypted_data = $(this).data('encrypted')
-    decrypted_data = CryptoJS.AES.decrypt(encrypted_data, self.getUserSecret()).toString(CryptoJS.enc.Utf8)
-    alert(decrypted_data)
+    self.userSecret($(this), (field, secret) ->
+      value = field.data('encrypted')
+      decrypted_data = CryptoJS.AES.decrypt(value, secret).toString(CryptoJS.enc.Utf8)
+      alert(decrypted_data)
+    )
   )
 )
 
-self.getUserSecret = ->
+self.userSecret = (value, func) ->
   # get encrypted secret from the page
   encrypted_secret = $.trim($('meta[name=user-secret]').attr('content'))
-  user_password = $.trim($('meta[name=user-secret]').data('user-password'))
 
-  # if the user has not entered the password for this request, ask
-  if user_password == ''
-    user_password = $.trim(prompt('Please enter your password', ''))
-    $('meta[name=user-secret]').data('user-password', user_password)
+  self.promptUserPassword((password) ->
+    decrypted_secret = $.trim(CryptoJS.AES.decrypt(encrypted_secret, password).toString(CryptoJS.enc.Utf8))
+    if decrypted_secret == ''
+      alert('Wrong password')
+      throw "Wrong Password"
+    else
+      func(value, decrypted_secret)
+  )
 
-  # decrypt the secret using the users password
-  decrypted_secret = CryptoJS.AES.decrypt(encrypted_secret, user_password).toString(CryptoJS.enc.Utf8)
-
-  if decrypted_secret == ''
-    $('meta[name=user-secret]').removeAttr('user-password')
-    alert('Wrong password')
-    throw "Wrong Password"
-
-  # return the secret
-  $.trim(decrypted_secret)
+self.promptUserPassword = (func)->
+  $('#user-password-dialog').one('show', ->
+    setTimeout( ->
+      $('#user-password-dialog-password').focus()
+    , 300)
+  ).modal().one('hidden', ->
+    if $(this).data('result') == 'ok'
+      func($('#user-password-dialog-password').val())
+  )
 
 JsonFormatter =
   stringify: (cipherParams)->

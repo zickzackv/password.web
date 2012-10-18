@@ -34,5 +34,25 @@
         </div>
       </div> <!--! end of .container -->
     </div> <!--! end of #main -->
+
+    <div class="modal hide fade" id="user-password-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Password required</h3>
+      </div>
+      <div class="modal-body">
+        <p>Your password is required to decrypt the data</p>
+        <form onsubmit="$(this).parents('.modal').data('result', 'ok').modal('hide'); return false;">
+          <fieldset>
+            <label for="user-password-dialog-password">Password</label>
+            <input type="password" id="user-password-dialog-password" value="" class="text ui-widget-content ui-corner-all" />
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" onclick="$(this).parents('.modal').modal('hide'); return false;">Cancel</a>
+        <a href="#" class="btn btn-primary" onclick="$(this).parents('.modal').data('result', 'ok').modal('hide') return false;">OK</a>
+      </div>
+    </div>
   </body>
 </html>
