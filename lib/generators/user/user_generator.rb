@@ -12,10 +12,10 @@ class UserGenerator < Rails::Generators::Base
       user = User.find_by_email(curr_email)
       raise "Current passwort doesn't match" unless user.valid_password?(curr_password)
       secret = user.user_secret
-      secret = `echo '#{secret}' | openssl enc -aes-256-cbc -pass pass:"#{curr_password}" -d -base64`.strip
+      secret = `echo '#{secret}' | openssl enc -aes-256-cbc -pass pass:"#{curr_password.shellescape}" -d -base64`.strip
     end
     
-    encrypted = `echo '#{secret}' | openssl enc -aes-256-cbc -pass pass:"#{new_password}" -e -base64`.strip
+    encrypted = `echo '#{secret}' | openssl enc -aes-256-cbc -pass pass:"#{new_password.shellescape}" -e -base64`.strip
 
     user = User.new(
       email: new_email,
