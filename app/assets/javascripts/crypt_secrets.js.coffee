@@ -23,6 +23,17 @@ $(->
       alert(decrypted_data)
     )
   )
+
+  $('[data-decrypt-on-show]').each( (index) ->
+    $(this).parents('.modal').on('show', ->
+      self.userSecret($(this), (dialog, secret) ->
+        $(dialog).find('[data-decrypt-on-show]').text( ->
+          value = $(this).data('decrypt-on-show')
+          CryptoJS.AES.decrypt(value, secret).toString(CryptoJS.enc.Utf8)
+        )
+      )
+    )
+  )
 )
 
 self.userSecret = (value, func) ->

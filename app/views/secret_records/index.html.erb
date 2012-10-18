@@ -16,10 +16,11 @@
       <td><%= secret_record.title %></td>
       <td>
         <div class="btn-group pull-right">
-          <%= link_to '<em class="icon-eye-open"></em> Show'.html_safe, '#', data: { encrypted: secret_record.password }, class: 'btn btn-small' %>
+          <a data-toggle="modal" href="#secret-data-<%= secret_record.id %>" class="btn btn-small" type="button"><em class="icon-eye-open"></em> Show</a>
           <%= link_to 'Edit', edit_secret_record_path(secret_record), class: 'btn btn-small' %>
           <%= link_to 'Destroy', secret_record, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger' %>
         </div>
+        <%= render secret_record %>
       </td>
     </tr>
   <% end %>

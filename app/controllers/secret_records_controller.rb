@@ -37,7 +37,7 @@ class SecretRecordsController < ApplicationController
   def create
     respond_to do |format|
       if @secret_record.save
-        format.html { redirect_to @secret_record, notice: 'Secret record was successfully created.' }
+        format.html { redirect_to secret_records_url, notice: 'Secret record was successfully created.' }
         format.json { render json: @secret_record, status: :created, location: @secret_record }
       else
         format.html { render action: "new" }
@@ -51,7 +51,7 @@ class SecretRecordsController < ApplicationController
   def update
     respond_to do |format|
       if @secret_record.update_attributes(params[:secret_record])
-        format.html { redirect_to @secret_record, notice: 'Secret record was successfully updated.' }
+        format.html { redirect_to secret_records_url, notice: 'Secret record was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
