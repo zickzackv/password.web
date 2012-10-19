@@ -1,4 +1,3 @@
-
 # Password.Web #
 
 A simple centralized rails based password store. 
@@ -50,7 +49,8 @@ For decryption of the common secret [crypto-js][2] is used.
    
 # Authors #
 
-Paul Spieker
+[Paul Spieker](https://github.com/spieker/)
+[Fabian Otto](https://github.com/zickzackv/)
 
 ## Credits ##
  
