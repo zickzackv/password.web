@@ -50,8 +50,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn" onclick="$(this).parents('.modal').modal('hide'); return false;">Cancel</a>
-        <a href="#" class="btn btn-primary" onclick="$(this).parents('.modal').data('result', 'ok').modal('hide') return false;">OK</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary" onclick="$(this).parents('.modal').data('result', 'ok').modal('hide'); return false;">OK</a>
       </div>
     </div>
   </body>
