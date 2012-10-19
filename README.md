@@ -1,8 +1,19 @@
 
 # Password.Web #
 
-A simple centralized rails based password store
+A simple centralized rails based password store. 
 
+The data is encrypted with [aes265][0] [cbc][1] using a common 
+secret. This secret is encrypted with the password of each user. 
+
+For encryption or decryption of a stored seceret, the user has to use
+his own password. 
+
+For decryption of the common secret [crypto-js][2] is used.
+
+[0]:https://de.wikipedia.org/wiki/Advanced_Encryption_Standard
+[1]:https://en.wikipedia.org/wiki/Cipher_block_chaining#Cipher-block_chaining_.28CBC.29)
+[2]:https://code.google.com/p/crypto-js/
 
 ## Installation ##
 
@@ -44,11 +55,11 @@ Paul Spieker
 ## Credits ##
  
 Based on the idea of
-[webpasswordsafe][https://code.google.com/p/webpasswordsafe/]
+[webpasswordsafe](https://code.google.com/p/webpasswordsafe/)
 
+## License ##
 
-## License ## 
-
+Not specifyd yet.
 
 
 
