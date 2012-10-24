@@ -38,7 +38,7 @@ $(->
 
 self.userSecret = (value, func) ->
   # get encrypted secret from the page
-  encrypted_secret = $.trim($('meta[name=user-secret]').attr('content'))
+  encrypted_secret = $.trim($('meta[name=x-user-secret]').attr('content'))
 
   self.promptUserPassword((password) ->
     decrypted_secret = $.trim(CryptoJS.AES.decrypt(encrypted_secret, password).toString(CryptoJS.enc.Utf8))

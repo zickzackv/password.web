@@ -1,0 +1,12 @@
+<div class="well" style="padding: 8px 0;">
+  <ul class="nav nav-list">
+    <li class="nav-header">Password groups</li>
+    <% current_user.groups.each do |g| %>
+      <li><%= link_to g.name, g %></li>
+    <% end %>
+    <li class="nav-header">Actions</li>
+    <li><%= link_to 'Manage users', group_members_path(@group) %></li>
+    <li><%= link_to 'Edit group', edit_group_path(@group) %></li>
+    <li><%= link_to 'Add password', new_group_secret_record_path(@group) %></li>
+  </ul>
+</div>

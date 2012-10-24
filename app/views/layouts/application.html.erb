@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Password.Web" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Password.Web" %>">
-    <% if current_user %>
-      <meta name="user-secret" content="<%= current_user.user_secret %>">
+    <% if current_user and @group %>
+      <meta name="x-user-secret" content="<%= @group.secret_for current_user %>">
     <% end %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>

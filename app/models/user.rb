@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
   rolify
+
+  has_many :members
+  has_many :groups, through: :members
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

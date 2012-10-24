@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="span3">
+    <%= render 'groups/navigation' %>
+  </div>
+
+  <div class="span9">
+    <h1><%= @group.name %></h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @group.secret_records.each do |secret_record| %>
+        <tr>
+          <td><%= secret_record.title %></td>
+          <td>
+            <div class="btn-group pull-right">
+              <a data-toggle="modal" href="#secret-data-<%= secret_record.id %>" class="btn btn-small" type="button"><em class="icon-eye-open"></em> Show</a>
+              <%= link_to 'Edit', edit_group_secret_record_path(@group, secret_record), class: 'btn btn-small' %>
+              <%= link_to 'Destroy', [@group, secret_record], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger' %>
+            </div>
+            <%= render secret_record %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

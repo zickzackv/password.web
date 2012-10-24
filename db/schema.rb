@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018082230) do
+ActiveRecord::Schema.define(:version => 20121024123157) do
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "members", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.string   "secret"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "accepted",   :default => false, :null => false
+  end
+
+  add_index "members", ["group_id"], :name => "index_members_on_group_id"
+  add_index "members", ["user_id"], :name => "index_members_on_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -32,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20121018082230) do
     t.datetime "updated_at", :null => false
     t.string   "title"
     t.text     "notes"
+    t.integer  "group_id"
   end
 
   create_table "users", :force => true do |t|

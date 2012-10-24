@@ -1,5 +1,6 @@
 class SecretRecordsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :group, through: 'current_user'
+  load_and_authorize_resource :secret_record, through: 'group'
   
   # GET /secret_records
   # GET /secret_records.json
@@ -37,7 +38,7 @@ class SecretRecordsController < ApplicationController
   def create
     respond_to do |format|
       if @secret_record.save
-        format.html { redirect_to secret_records_url, notice: 'Secret record was successfully created.' }
+        format.html { redirect_to @group, notice: 'Secret record was successfully created.' }
         format.json { render json: @secret_record, status: :created, location: @secret_record }
       else
         format.html { render action: "new" }
@@ -51,7 +52,7 @@ class SecretRecordsController < ApplicationController
   def update
     respond_to do |format|
       if @secret_record.update_attributes(params[:secret_record])
-        format.html { redirect_to secret_records_url, notice: 'Secret record was successfully updated.' }
+        format.html { redirect_to @group, notice: 'Secret record was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -66,7 +67,7 @@ class SecretRecordsController < ApplicationController
     @secret_record.destroy
 
     respond_to do |format|
-      format.html { redirect_to secret_records_url }
+      format.html { redirect_to @group }
       format.json { head :no_content }
     end
   end
