@@ -30,8 +30,7 @@ class MembersController < ApplicationController
     @member.secret = Secret.encode(secret, with: acceptance_password)
     respond_to do |format|
       if @member.save
-        p acceptance_password
-        # TODO: Mail with acceptance_password !!!
+        UserMailer.assignment(@member, acceptance_password).deliver
         format.html { redirect_to group_members_url(@group), notice: 'Member was successfully created.' }
         format.json { render json: @member, status: :created, location: @member }
       else
