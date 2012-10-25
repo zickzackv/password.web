@@ -4,6 +4,8 @@ class Group < ActiveRecord::Base
   has_many :users, through: :members
   attr_accessible :name
 
+  validates :name, presence: true
+
   def secret_for(user)
     member = member_for user
     return '' if member.nil?

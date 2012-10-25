@@ -15,3 +15,4 @@
 //= require bootstrap
 //= require crypto_js/rollups/aes
 //= require crypt_secrets
+//= require members

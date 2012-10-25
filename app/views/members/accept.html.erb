@@ -6,24 +6,7 @@
   <div class="span9">
     <h3>Accept membership to group <%= @group.name %></h3>
     <%= simple_form_for [@group, @member], url: accept_group_member_path(@group, @member) do |f| %>
-      <%= f.input :secret, as: 'hidden' %>
-      <%= javascript_tag <<-JS
-$(function() {
-  var el = $('#member_secret');
-  var val = el.val();
-  if(window.location.hash) {
-    decrypted = $.trim(CryptoJS.AES.decrypt(val, window.location.hash.replace('#', '')).toString(CryptoJS.enc.Utf8));
-    password = prompt('Your password', '');
-    encrypted = $.trim(CryptoJS.AES.encrypt(decrypted, password).toString());
-    el.val(encrypted);
-    el.parents('form').submit();
-  } else {
-    alert('Passwort is missing');
-    window.location.href = '#{group_url(@group)}';
-  }
-});
-JS
-%>
+      <%= f.input :secret, as: 'hidden', input_html: { data: { pwencrypt: 'now' } } %>
       <div class="form-actions" style="display: none;">
         <%= f.button :submit %>
       </div>

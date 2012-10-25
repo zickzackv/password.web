@@ -49,7 +49,7 @@ class MembersController < ApplicationController
   end
 
   def accepted
-    @member.secret = params[:secret]
+    @member.secret = params[:member][:secret]
     @member.accepted = true
     respond_to do |format|
       if @member.save

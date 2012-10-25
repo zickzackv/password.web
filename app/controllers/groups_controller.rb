@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
 
-  load_and_authorize_resource :group, through: 'current_user'
+  load_and_authorize_resource :group, through: 'current_user', except: [:create]
 
   # GET /groups
   # GET /groups.json
@@ -36,20 +36,37 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
+    authorize! :create, Group
+
+    password = params[:group].delete(:password)
+    @group = Group.new(params[:group])
+    raise(CanCan::AccessDenied, 'Wrong password') unless current_user.valid_password?(password)
+    Group.transaction do
+      @group.save!
+      member          = Member.new
+      member.group    = @group
+      member.user     = current_user
+      member.secret   = Secret.encode(new_token(32), with: password)
+      member.accepted = true
+      member.save!
+      current_user.members << member
+      current_user.save!
+    end
     respond_to do |format|
-      if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render json: @group, status: :created, location: @group }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @group, notice: 'Group was successfully created.' }
+      format.json { render json: @group, status: :created, location: @group }
+    end
+  rescue
+    respond_to do |format|
+      format.html { render action: "new" }
+      format.json { render json: @group.errors, status: :unprocessable_entity }
     end
   end
 
   # PUT /groups/1
   # PUT /groups/1.json
   def update
+    raise(CanCan::AccessDenied, 'Wrong password') unless current_user.valid_password?(params[:group].delete(:password))
     respond_to do |format|
       if @group.update_attributes(params[:group])
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
