@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+  simple_form:
+    labels:
+      group:
+        password: "Your Password"
+    
