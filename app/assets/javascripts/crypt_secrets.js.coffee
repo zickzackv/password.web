@@ -1,13 +1,21 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-$(->
+jQuery(->
+  oldFocus = jQuery().modal.Constructor.prototype.enforceFocus
+  jQuery().modal.Constructor.prototype.enforceFocus = ->
+  
   $('input[data-encrypt=true]').each((index)->
+    # hide encrypted labled field and replace it
+    # with a new input field which encrypts
+    # its data immediately. In the end the encrypted
+    # data is written into the hidden input field.
     elem = $(this)
     type = elem.data('type')
-    if type==undefined
+    if type == undefined
       type = elem.attr('type')
     elem.hide()
+    
     newElem = $('<input />').attr('value', '').attr('type', type).change(->
       self.userSecret($(this), (field, secret)->
         value = field.val()
